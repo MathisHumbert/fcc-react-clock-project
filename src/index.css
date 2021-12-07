@@ -108,6 +108,9 @@ main {
   color: #d7e0ff;
   font-size: 60px;
 }
+.clock-container-time.active {
+  color: #f87070;
+}
 
 .start-stop-btn,
 .reset-btn {
