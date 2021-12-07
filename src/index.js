@@ -39,9 +39,10 @@ const App = () => {
       const secondsLeft = Math.round((then - Date.now()) / 1000);
 
       // if time is zero
-      if (secondsLeft < 0) {
-        clearInterval(coutdown);
+      if (secondsLeft === 0) {
         song.current.play();
+      }
+      if (secondsLeft === -1) {
         // set session time back to start and launch break time
         if (flagTime) {
           setTime(timeLength * 60);
@@ -52,6 +53,7 @@ const App = () => {
           setBreakTime(breakTimeLength * 60);
           setFlagTime(true);
         }
+        clearInterval(coutdown);
         return;
       }
 
