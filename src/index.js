@@ -18,10 +18,13 @@ const App = () => {
   const [flagTime, setFlagTime] = useState(true);
   const mounted = useRef(false);
 
+  const song = useRef(null);
+
   // timer function
   const timer = (seconds) => {
     // clear any interval
     clearInterval(coutdown);
+
     const now = Date.now();
     const then = now + seconds * 1000;
     displayTimeLeft(seconds);
@@ -38,6 +41,7 @@ const App = () => {
       // if time is zero
       if (secondsLeft < 0) {
         clearInterval(coutdown);
+        song.current.play();
         // set session time back to start and launch break time
         if (flagTime) {
           setTime(timeLength * 60);
@@ -146,6 +150,7 @@ const App = () => {
         timeLength={timeLength}
         toggleBreakTime={toggleBreakTime}
         breakTimeLength={breakTimeLength}
+        start={start}
       />
       <Clock
         handelStart={handelStart}
@@ -155,6 +160,7 @@ const App = () => {
         displayTimeLeft={displayTimeLeft}
         resetTime={resetTime}
         flagTime={flagTime}
+        song={song}
       />
     </main>
   );
@@ -165,6 +171,7 @@ const Controlers = ({
   timeLength,
   toggleBreakTime,
   breakTimeLength,
+  start,
 }) => {
   return (
     <header className="controlers">
@@ -175,6 +182,7 @@ const Controlers = ({
             id="break-decrement"
             className="time-btn"
             onClick={() => toggleBreakTime('dec')}
+            disabled={start}
           >
             -
           </button>
@@ -185,6 +193,7 @@ const Controlers = ({
             id="break-increment"
             className="time-btn"
             onClick={() => toggleBreakTime('inc')}
+            disabled={start}
           >
             +
           </button>
@@ -197,6 +206,7 @@ const Controlers = ({
             id="session-decrement"
             className="time-btn"
             onClick={() => toggleTime('dec')}
+            disabled={start}
           >
             -
           </button>
@@ -207,6 +217,7 @@ const Controlers = ({
             id="session-increment"
             className="time-btn"
             onClick={() => toggleTime('inc')}
+            disabled={start}
           >
             +
           </button>
@@ -224,6 +235,7 @@ const Clock = ({
   resetTime,
   breakTime,
   flagTime,
+  song,
 }) => {
   return (
     <section className="clock">
@@ -260,6 +272,12 @@ const Clock = ({
           </button>
         </div>
       </div>
+      <audio
+        id="beep"
+        preload="auto"
+        src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+        ref={song}
+      />
     </section>
   );
 };

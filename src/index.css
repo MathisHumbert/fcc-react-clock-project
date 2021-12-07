@@ -55,6 +55,11 @@ main {
   color: #f87070;
 }
 
+.time-btn:disabled {
+  cursor: not-allowed;
+  color: rgba(215, 224, 255, 0.2);
+}
+
 .controlers-time {
   color: #d7e0ff;
   font-size: 22px;
